@@ -1,0 +1,1 @@
+export const apiUrl = 'http://localhost:3000'; // Change to production URL when deploying       
