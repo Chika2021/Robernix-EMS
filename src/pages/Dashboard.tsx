@@ -1,58 +1,35 @@
+
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import LogoutLink from "../services/Logout";
 import { apiUrl } from "../deployment/deploy";
 
-interface Project {
-  id: number;
-  amount: number;
-}
-
-interface Client {
-  id: number;
-  projects: Project[];
-}
-
 const Dashboard: React.FC = () => {
   const { handleLogout } = LogoutLink();
+
 
   const [income, setIncome] = useState(0);
   const [clientsCount, setClientsCount] = useState(0);
   const [projectsCount, setProjectsCount] = useState(0);
 
+
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchSummary = async () => {
       try {
         const token = localStorage.getItem("token");
-
-        // ✅ 1. Fetch total income directly from backend
-        const incomeRes = await fetch(`${apiUrl}/client/total-income`, {
+        const res = await fetch(`${apiUrl}/dashboard/summary`, {
           headers: { Authorization: token ? `Bearer ${token}` : "" },
         });
-        if (!incomeRes.ok) throw new Error("Failed to fetch income");
-        const incomeData = await incomeRes.json();
-        setIncome(incomeData.totalIncome);
-
-        // ✅ 2. Fetch clients (to calculate counts)
-        const clientsRes = await fetch(`${apiUrl}/client`, {
-          headers: { Authorization: token ? `Bearer ${token}` : "" },
-        });
-        if (!clientsRes.ok) throw new Error("Failed to fetch clients");
-        const clientsData: Client[] = await clientsRes.json();
-
-        setClientsCount(clientsData.length);
-
-        const totalProjects = clientsData.reduce(
-          (sum, client) => sum + (client.projects?.length || 0),
-          0
-        );
-        setProjectsCount(totalProjects);
+        if (!res.ok) throw new Error("Failed to fetch dashboard summary");
+        const data = await res.json();
+        setIncome(data.totalAmount);
+        setClientsCount(data.totalClients);
+        setProjectsCount(data.totalProjects);
       } catch (err) {
-        console.error("Error fetching dashboard data:", err);
+        console.error("Error fetching dashboard summary:", err);
       }
     };
-
-    fetchData();
+    fetchSummary();
   }, []);
 
   // ✅ Format number as currency in Naira
@@ -70,7 +47,7 @@ const Dashboard: React.FC = () => {
         {/* Sidebar */}
         <aside className="w-64 bg-white shadow-md">
           <div className="p-6 font-bold text-purple-700 text-2xl">
-            AdminPanel
+            {localStorage.getItem("name") || "User"}
           </div>
           <nav className="mt-8">
             <Link

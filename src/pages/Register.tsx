@@ -7,7 +7,7 @@ const Register: React.FC = () => {
         name, setName, 
         email, setEmail, 
         password, setPassword,
-        phone, setPhone,
+        phoneNumber, setPhoneNumber,
         address, setAddress,
         city, setCity,
         country, setCountry,
@@ -94,8 +94,8 @@ const Register: React.FC = () => {
                                     <input
                                         name="phone"
                                         type="tel"
-                                        value={phone}
-                                        onChange={(e) => setPhone(e.target.value)}
+                                        value={phoneNumber}
+                                        onChange={(e) => setPhoneNumber(e.target.value)}
                                         required
                                         className="px-2 py-3 mt-1 block w-full rounded-md border border-gray-300 
                   shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
@@ -237,7 +237,11 @@ const Register: React.FC = () => {
                                 </button>
                             </div>
 
-                        </form>
+                                                </form>
+                                                <div className="mt-4 text-center">
+                                                    <span className="text-gray-700">Already have an account? </span>
+                                                    <a href="/login" className="text-blue-600 hover:underline font-semibold">Login here</a>
+                                                </div>
                     </div>
                 </div>
             </div>

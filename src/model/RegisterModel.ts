@@ -1,7 +1,7 @@
 export interface RegisterModel {
   name: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   address: string;
   city: string;
   country: string;

@@ -8,7 +8,7 @@ import type { LoginModel } from "../model/LoginModel";
 // Service: login user
 export const loginUser = async (
   credentials: LoginModel
-): Promise<{ token: string; name: string; email: string }> => {
+): Promise<{ token: string; name: string; email: string; role: string }> => {
   const response = await fetch(`${apiUrl}/users/login`, {
     method: "POST",
     headers: {
@@ -49,9 +49,15 @@ export const Login = () => {
       localStorage.setItem("token", login.token);
       localStorage.setItem("email", login.email);
       localStorage.setItem("name", login.name);
-
+      if (login.role) {
+        localStorage.setItem("role", login.role);
+      }
       alert("Login Successful ✅");
-      navigate("/dashboard");
+        if (login.role === "admin") {
+          navigate("/admin/dashboard", { replace: true });
+        } else {
+          navigate("/dashboard", { replace: true });
+        }
     } catch (err) {
       console.error("❌ Login error:", err);
       alert("Login Failed. Please check your credentials.");

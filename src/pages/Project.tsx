@@ -117,9 +117,10 @@ const Project: React.FC = () => {
           <table className="w-full border-collapse text-white">
             <thead>
               <tr className="bg-white/30 backdrop-blur-md text-white">
+                <th className="p-3 text-left">Project Key</th>
                 <th className="p-3 text-left">Project Name</th>
                 <th className="p-3 text-left">Description</th>
-                <th className="p-3 text-left">Price</th>
+                {/* <th className="p-3 text-left">Price</th> */}
                 <th className="p-3 text-left">Amount</th>
                 <th className="p-3 text-left">Status</th>
               </tr>
@@ -128,32 +129,50 @@ const Project: React.FC = () => {
               {projects.map((project, index) => (
                 <tr
                   key={project.id}
-                  className={`${index % 2 === 0 ? "bg-white/10" : "bg-white/5"
-                    } hover:bg-white/20 transition`}
+                  className={`${index % 2 === 0 ? "bg-white/10" : "bg-white/5"} hover:bg-white/20 transition`}
                 >
+                  <td className="p-3 border-b border-white/20 font-mono text-xs">
+                    {project.id}
+                  </td>
                   <td className="p-3 border-b border-white/20">
                     {project.projectName}
                   </td>
                   <td className="p-3 border-b border-white/20">
                     {project.projectDescription}
                   </td>
-                  <td className="p-3 border-b border-white/20 font-semibold">
+                  {/* <td className="p-3 border-b border-white/20 font-semibold">
                     ₦{project.price.toLocaleString()}
-                  </td>
+                  </td> */}
                   <td className="p-3 border-b border-white/20 font-semibold">
                     ₦{project.amount.toLocaleString()}
                   </td>
                   <td className="p-3 border-b border-white/20">
-                    <span
-                      className={`px-2 py-1 rounded-full text-xs font-medium ${project.status.toLowerCase() === "completed"
-                          ? "bg-green-400/30 text-green-200"
-                          : project.status.toLowerCase() === "in progress"
-                            ? "bg-yellow-400/30 text-yellow-200"
-                            : "bg-red-400/30 text-red-200"
-                        }`}
-                    >
-                      {project.status}
-                    </span>
+                    {(() => {
+                      let label = "";
+                      let color = "";
+                      switch (project.status) {
+                        case "not_started":
+                          label = "Not Started";
+                          color = "bg-red-400/30 text-red-200";
+                          break;
+                        case "in_progress":
+                          label = "In Progress";
+                          color = "bg-yellow-400/30 text-yellow-200";
+                          break;
+                        case "completed":
+                          label = "Completed";
+                          color = "bg-green-400/30 text-green-200";
+                          break;
+                        default:
+                          label = project.status;
+                          color = "bg-gray-400/30 text-gray-200";
+                      }
+                      return (
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${color}`}>
+                          {label}
+                        </span>
+                      );
+                    })()}
                   </td>
                 </tr>
               ))}

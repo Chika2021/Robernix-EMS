@@ -3,10 +3,24 @@ import { motion } from "framer-motion";
 import Login from "../services/LoginUser";
 
 const UserLogin: React.FC = () => {
-    const { name, setName, email, setEmail, password, setPassword, handleLogin } = Login();
+  const {
+    name,
+    setName,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    handleLogin,
+  } = Login();
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-sky-400 to-indigo-600 px-6">
+    <div
+      className="min-h-screen flex items-center justify-center bg-cover bg-center px-6"
+      style={{
+        backgroundImage:
+          "url('https://images.unsplash.com/photo-1593642532400-2682810df593?auto=format&fit=crop&w=1950&q=80')", // Office-like image
+      }}
+    >
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -18,7 +32,7 @@ const UserLogin: React.FC = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="mb-8 font-extrabold text-4xl text-center text-gray-800"
+          className="mb-8 font-extrabold text-4xl text-center text-gray-600"
         >
           Login To Robernix Industries
         </motion.h1>
@@ -33,7 +47,10 @@ const UserLogin: React.FC = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4, duration: 0.6 }}
             >
-              <label className="block font-semibold text-gray-700" htmlFor="name">
+              <label
+                className="block font-semibold text-gray-700"
+                htmlFor="name"
+              >
                 Name
               </label>
               <input
@@ -54,7 +71,10 @@ const UserLogin: React.FC = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.5, duration: 0.6 }}
             >
-              <label className="block font-semibold text-gray-700" htmlFor="email">
+              <label
+                className="block font-semibold text-gray-700"
+                htmlFor="email"
+              >
                 Email
               </label>
               <input
@@ -75,7 +95,10 @@ const UserLogin: React.FC = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.6, duration: 0.6 }}
             >
-              <label className="block font-semibold text-gray-700" htmlFor="password">
+              <label
+                className="block font-semibold text-gray-700"
+                htmlFor="password"
+              >
                 Password
               </label>
               <input
@@ -99,11 +122,14 @@ const UserLogin: React.FC = () => {
             >
               <button
                 type="submit"
-                className="flex items-center justify-center px-8 py-3 text-lg font-semibold rounded-md text-white bg-indigo-600 shadow-md hover:bg-indigo-700 hover:scale-105 transform transition"
+                className="flex items-center justify-center px-8 py-3 text-lg font-semibold rounded-md text-white bg-gray-600 shadow-md hover:bg-indigo-700 hover:scale-105 transform transition"
               >
-                Register
+                LOGIN
               </button>
-              <a href="/register" className="font-semibold text-indigo-600 hover:underline">
+              <a
+                href="/register"
+                className="font-semibold text-gray-600 hover:underline"
+              >
                 Not registered?
               </a>
             </motion.div>
@@ -129,6 +155,6 @@ const UserLogin: React.FC = () => {
       </motion.div>
     </div>
   );
-}
+};
 
 export default UserLogin;
