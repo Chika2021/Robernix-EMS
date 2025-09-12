@@ -9,7 +9,7 @@ const AdminDashboard: React.FC = () => {
   const [income, setIncome] = useState(0);
   const [clientsCount, setClientsCount] = useState(0);
   const [projectsCount, setProjectsCount] = useState(0);
-  const [usersCount, setUsersCount] = useState(0);
+  const [, setUsersCount] = useState(0);
   const [users, setUsers] = useState<any[]>([]);
   const [recentProjects, setRecentProjects] = useState<any[]>([]);
 
