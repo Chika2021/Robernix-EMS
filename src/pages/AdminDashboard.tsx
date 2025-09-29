@@ -189,7 +189,14 @@ const AdminDashboard: React.FC = () => {
                         <td className="px-2 sm:px-4 py-2">{user.name}</td>
                         <td className="px-2 sm:px-4 py-2">{user.email}</td>
                         <td className="px-2 sm:px-4 py-2">{user.phoneNumber || user.phone || "-"}</td>
-                        <td className="px-2 sm:px-4 py-2">{user.role}</td>
+                        {/* <td className="px-2 sm:px-4 py-2">{user.role}</td> */}
+                        <td className="px-2 sm:px-4 py-2">
+                          <span className="inline-block px-2 py-1 rounded bg-purple-100 text-purple-700 text-xs sm:text-sm font-semibold">
+                            {user.role
+                              ? user.role.charAt(0).toUpperCase() + user.role.slice(1)
+                              : "User"}
+                          </span>
+                        </td>
                         <td className="px-2 sm:px-4 py-2">{formatCurrency(totalIncome)}</td>
                         <td className="px-2 sm:px-4 py-2">
                           <button
