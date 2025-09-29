@@ -36,15 +36,9 @@ const Project: React.FC = () => {
         const token = localStorage.getItem("token") || "";
         const url = `${apiUrl}/client/${id}/projects`;
 
-        console.log("🔍 Fetching projects from:", url);
-
         const res = await fetch(url, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
-
-        console.log("📡 Response status:", res.status);
 
         if (!res.ok) {
           const errData = await res.json();
@@ -52,15 +46,12 @@ const Project: React.FC = () => {
         }
 
         const data: ClientResponse[] = await res.json();
-        console.log("✅ Raw API response:", data);
-
         if (Array.isArray(data) && data.length > 0) {
           setProjects(data[0].projects || []);
         } else {
           setProjects([]);
         }
       } catch (err: any) {
-        console.error("Error fetching projects:", err);
         setError(err.message || "❌ Could not load projects");
       } finally {
         setLoading(false);
@@ -70,116 +61,83 @@ const Project: React.FC = () => {
     fetchProjects();
   }, [id]);
 
-  if (loading) {
-    return <p className="text-blue-500">⏳ Loading projects...</p>;
-  }
-
-  if (error) {
-    return <p className="text-red-500">{error}</p>;
-  }
+  if (loading)
+    return <p className="text-blue-500 text-center mt-6">⏳ Loading projects...</p>;
+  if (error) return <p className="text-red-500 text-center mt-6">{error}</p>;
 
   return (
     <div
-      className="min-h-screen p-6 bg-cover bg-center flex flex-col"
+      className="min-h-screen p-6 bg-cover bg-center"
       style={{
         backgroundImage:
-          "url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80')",
+          "url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80')",
       }}
     >
-      {/* Back & Create buttons */}
-      <div className="flex justify-between items-center mb-6">
-        <button
-          onClick={() => navigate("/projects")}
-          className="backdrop-blur-md bg-white/30 text-white border border-white/40 
-             px-4 py-2 rounded-lg shadow-md hover:bg-white/40 hover:shadow-lg transition"
-        >
-          ⬅ Back to Projects
-        </button>
-
-
-        <button
-          onClick={() => navigate(`/client/${id}/projects/create`)}
-          className="backdrop-blur-md bg-blue-600/40 text-white border border-white/30 
-                     px-4 py-2 rounded-lg shadow-md hover:bg-blue-600/60 hover:shadow-xl transition"
-        >
-          ➕ Create Project
-        </button>
-      </div>
-
-      {/* Projects Table */}
-      {projects.length === 0 ? (
-        <p className="text-center text-white font-semibold bg-white/20 backdrop-blur-md 
-                      rounded-lg shadow-md p-4 w-fit mx-auto border border-white/30">
-          No projects found
-        </p>
-      ) : (
-        <div className="overflow-hidden rounded-xl shadow-2xl bg-white/20 backdrop-blur-lg border border-white/30">
-          <table className="w-full border-collapse text-white">
-            <thead>
-              <tr className="bg-white/30 backdrop-blur-md text-white">
-                <th className="p-3 text-left">Project Key</th>
-                <th className="p-3 text-left">Project Name</th>
-                <th className="p-3 text-left">Description</th>
-                {/* <th className="p-3 text-left">Price</th> */}
-                <th className="p-3 text-left">Amount</th>
-                <th className="p-3 text-left">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {projects.map((project, index) => (
-                <tr
-                  key={project.id}
-                  className={`${index % 2 === 0 ? "bg-white/10" : "bg-white/5"} hover:bg-white/20 transition`}
-                >
-                  <td className="p-3 border-b border-white/20 font-mono text-xs">
-                    {project.id}
-                  </td>
-                  <td className="p-3 border-b border-white/20">
-                    {project.projectName}
-                  </td>
-                  <td className="p-3 border-b border-white/20">
-                    {project.projectDescription}
-                  </td>
-                  {/* <td className="p-3 border-b border-white/20 font-semibold">
-                    ₦{project.price.toLocaleString()}
-                  </td> */}
-                  <td className="p-3 border-b border-white/20 font-semibold">
-                    ₦{project.amount.toLocaleString()}
-                  </td>
-                  <td className="p-3 border-b border-white/20">
-                    {(() => {
-                      let label = "";
-                      let color = "";
-                      switch (project.status) {
-                        case "not_started":
-                          label = "Not Started";
-                          color = "bg-red-400/30 text-red-200";
-                          break;
-                        case "in_progress":
-                          label = "In Progress";
-                          color = "bg-yellow-400/30 text-yellow-200";
-                          break;
-                        case "completed":
-                          label = "Completed";
-                          color = "bg-green-400/30 text-green-200";
-                          break;
-                        default:
-                          label = project.status;
-                          color = "bg-gray-400/30 text-gray-200";
-                      }
-                      return (
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${color}`}>
-                          {label}
-                        </span>
-                      );
-                    })()}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {/* Overlay for readability */}
+      <div className="min-h-screen bg-black/30 backdrop-blur-sm p-6 rounded-lg">
+        {/* Back & Create buttons */}
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+          <button
+            onClick={() => navigate("/projects")}
+            className="bg-gray-500 text-white px-4 py-2 rounded-lg shadow hover:bg-gray-600 w-full sm:w-auto"
+          >
+            ⬅ Back to Projects
+          </button>
+          <button
+            onClick={() => navigate(`/client/${id}/projects/create`)}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 w-full sm:w-auto"
+          >
+            ➕ Create Project
+          </button>
         </div>
-      )}
+
+        {projects.length === 0 ? (
+          <p className="text-center text-white font-semibold p-4 bg-black/40 rounded-lg shadow">
+            No projects found
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.map((project) => {
+              let statusColor = "";
+              switch (project.status) {
+                case "not_started":
+                  statusColor = "bg-red-100 text-red-800";
+                  break;
+                case "in_progress":
+                  statusColor = "bg-yellow-100 text-yellow-800";
+                  break;
+                case "completed":
+                  statusColor = "bg-green-100 text-green-800";
+                  break;
+                default:
+                  statusColor = "bg-gray-100 text-gray-800";
+              }
+
+              return (
+                <div
+                  key={project.id}
+                  className="bg-white/80 rounded-lg shadow p-4 flex flex-col justify-between hover:shadow-xl transition backdrop-blur-sm"
+                >
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900 mb-2">
+                      {project.projectName}
+                    </h3>
+                    <p className="text-gray-700 mb-2">{project.projectDescription}</p>
+                    <p className="text-gray-800 font-semibold mb-2">
+                      Amount: ₦{project.amount.toLocaleString()}
+                    </p>
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs font-medium ${statusColor}`}
+                    >
+                      {project.status.replace("_", " ").toUpperCase()}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -106,17 +106,7 @@ const Dashboard: React.FC = () => {
             <h1 className="text-xl font-bold text-purple-700">Dashboard</h1>
           </div>
 
-          {/* Right side */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 w-full sm:w-auto sm:justify-end">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="px-4 py-2 border rounded-lg w-full sm:w-auto"
-            />
-            <div className="w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center text-white font-bold mx-auto sm:mx-0">
-              SR
-            </div>
-          </div>
+         
         </header>
 
         {/* Dashboard Content */}

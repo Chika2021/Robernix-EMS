@@ -24,15 +24,10 @@ const AddProject: React.FC = () => {
   const [error, setError] = useState('');
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setProject((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setProject((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -57,9 +52,15 @@ const AddProject: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative bg-gray-900 overflow-hidden">
-      {/* Gradient animation */}
-      <div className="absolute inset-0 animate-gradient bg-gradient-to-br from-blue-800 via-purple-700 to-gray-900"></div>
+    <div
+      className="min-h-screen flex items-center justify-center relative bg-cover bg-center overflow-hidden"
+      style={{
+        backgroundImage:
+          "url('https://images.unsplash.com/photo-1581091215367-3a1a2e473ffb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80')", // Work environment image
+      }}
+    >
+      {/* Dark overlay for readability */}
+      <div className="absolute inset-0 bg-black/30"></div>
 
       {/* Falling white balls */}
       <div className="absolute inset-0 z-0">
@@ -68,9 +69,8 @@ const AddProject: React.FC = () => {
         ))}
       </div>
 
-      {/* Form */}
-      <div className="relative z-10 w-full max-w-md p-6 bg-white/20 backdrop-blur-md rounded-lg shadow-lg">
-        {/* Back Button */}
+      {/* Glassmorphic Form */}
+      <div className="relative z-10 w-full max-w-md p-6 bg-white/20 backdrop-blur-md rounded-2xl shadow-lg border border-white/30">
         <button
           onClick={() => navigate(-1)}
           className="mb-4 flex items-center gap-2 text-white hover:text-blue-300 font-semibold"
@@ -119,7 +119,6 @@ const AddProject: React.FC = () => {
             />
           </div>
 
-          // ...existing code...
           <div>
             <label className="block font-semibold mb-1">Status</label>
             <select
@@ -135,24 +134,6 @@ const AddProject: React.FC = () => {
               <option value="completed">Completed</option>
             </select>
           </div>
-          {/* ...existing code...
-
-          {/* <div>
-            <label className="block font-semibold mb-1">Status</label>
-            <select
-              name="status"
-              value={project.status}
-              onChange={handleChange}
-              className="w-full border border-gray-400 bg-gray-200 text-gray-900 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            >
-              <option value="">Select Status</option>
-              <option value="Pending">Pending</option>
-              <option value="In Progress">In Progress</option>
-              <option value="Completed">Completed</option>
-            </select>
-
-          </div> */}
 
           <div className="flex justify-between items-center">
             <button

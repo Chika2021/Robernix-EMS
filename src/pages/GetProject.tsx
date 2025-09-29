@@ -25,7 +25,6 @@ const GetProject: React.FC = () => {
         const res = await axios.get(`${apiUrl}/client`, {
           headers: { Authorization: token ? `Bearer ${token}` : "" },
         });
-
         setClients(res.data);
       } catch (err: any) {
         console.error("Error fetching clients:", err);
@@ -34,7 +33,6 @@ const GetProject: React.FC = () => {
         setLoading(false);
       }
     };
-
     fetchClients();
   }, []);
 
@@ -57,54 +55,65 @@ const GetProject: React.FC = () => {
   }
 
   return (
-    <div className="p-4 sm:p-6">
-      {/* Back Button */}
-      <button
-        onClick={() => navigate("/dashboard")}
-        className="mb-6 bg-gray-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-sky-600 transition w-full sm:w-auto"
-      >
-        ⬅ Back to Dashboard
-      </button>
+    <div
+      className="min-h-screen p-4 sm:p-6 bg-cover bg-center relative"
+      style={{
+        backgroundImage:
+          "url('https://images.unsplash.com/photo-1596564668556-53dc49665d47?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')", // Work environment image
+      }}
+    >
+      {/* Dark overlay for readability */}
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
 
-      <h1 className="text-xl sm:text-2xl font-bold text-gray-700 mb-6 text-center sm:text-left">
-        Client Details
-      </h1>
+      <div className="relative z-10">
+        {/* Back Button */}
+        <button
+          onClick={() => navigate("/dashboard")}
+          className="mb-6 bg-gray-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-sky-600 transition w-full sm:w-auto"
+        >
+          ⬅ Back to Dashboard
+        </button>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-        {clients.map((client) => (
-          <div
-            key={client.id}
-            className="relative overflow-hidden shadow-lg rounded-lg p-4 sm:p-6 hover:shadow-xl transition-shadow duration-300"
-          >
-            {/* Moving gradient background */}
-            <div className="absolute inset-0 -z-10 animate-gradient bg-gradient-to-r from-blue-500 via-pink-500 to-gray-500 bg-[length:400%_400%] rounded-lg"></div>
+        <h1 className="text-xl sm:text-2xl font-bold text-white mb-6 text-center sm:text-left">
+          Client Details
+        </h1>
 
-            <h2 className="text-lg sm:text-xl font-bold text-white mb-2">
-              {client.clientFirstname} {client.clientSurname}
-            </h2>
-            <p className="text-white text-sm sm:text-base mb-1">
-              <span className="font-semibold">📞 Phone:</span>{" "}
-              {client.clientPhoneNumber}
-            </p>
-            <p className="text-white text-sm sm:text-base mb-1">
-              <span className="font-semibold">🏦 Account Name:</span>{" "}
-              {client.clientAccountName}
-            </p>
-            <p className="text-white text-sm sm:text-base mb-4">
-              <span className="font-semibold">💳 Account Number:</span>{" "}
-              {client.clientAccountNumber}
-            </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          {clients.map((client) => (
+            <div
+              key={client.id}
+              className="relative overflow-hidden shadow-lg rounded-lg p-4 sm:p-6 hover:shadow-xl transition-shadow duration-300 bg-white/20 backdrop-blur-md"
+            >
+              {/* Moving gradient background with smoother blend */}
+              <div className="absolute inset-0 -z-10 animate-gradient bg-gradient-to-r from-indigo-500 via-purple-500 via-pink-400 to-red-400 bg-[length:400%_400%] rounded-lg"></div>
 
-            <div className="flex flex-col sm:flex-row gap-3">
-              <button
-                onClick={() => navigate(`/client/${client.id}/projects`)}
-                className="bg-white text-purple-700 px-4 py-2 rounded hover:bg-gray-200 shadow text-sm sm:text-base w-full sm:w-auto"
-              >
-                ➕ View/Add Projects
-              </button>
+              <h2 className="text-lg sm:text-xl font-bold text-white mb-2">
+                {client.clientFirstname} {client.clientSurname}
+              </h2>
+              <p className="text-white text-sm sm:text-base mb-1">
+                <span className="font-semibold">📞 Phone:</span>{" "}
+                {client.clientPhoneNumber}
+              </p>
+              <p className="text-white text-sm sm:text-base mb-1">
+                <span className="font-semibold">🏦 Account Name:</span>{" "}
+                {client.clientAccountName}
+              </p>
+              <p className="text-white text-sm sm:text-base mb-4">
+                <span className="font-semibold">💳 Account Number:</span>{" "}
+                {client.clientAccountNumber}
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button
+                  onClick={() => navigate(`/client/${client.id}/projects`)}
+                  className="bg-white text-purple-700 px-4 py-2 rounded hover:bg-gray-200 shadow text-sm sm:text-base w-full sm:w-auto"
+                >
+                  ➕ View/Add Projects
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       {/* Tailwind custom animation */}
